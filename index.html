@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>毒吐きPad</title>
+  <script src="js/jquery-2.1.3.min.js"></script>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  
+  <div class="app">
+    <p>
+    <img src="./img/jijii.webp" width="200" height="200"></p><br>
+    <h1>ひげじじいの毒吐きPad</h1> 
+  </div>
+
+
+  <h2>おやおや、不機嫌そうな顔をしてどうしたんじゃ？</h2>
+  <h2>なになに、とっても嫌なことがあったんじゃと。</h2>
+  <h2>そいつは大変じゃ、全て吐き出して水にながすのじゃ！</h2>
+
+  <main>
+    <div class="input-area">
+      <input id="title" type="text" placeholder="今の気持ちを一言で表すと？">
+    <textarea id="text" placeholder="何があったのか具体的に書きだして、”気持ちを吐き出す”ボタンを押すのじゃ！"></textarea>
+    </div>
+
+    <div class="button-area">
+      <button id="save">気持ちを吐き出す</button>
+      <button id="open-modal" name="open-modal-btn">水に流して浄化する</button>
+    </div>
+    <br>
+
+<!-- ↓ 以下これから工事👷 　ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー-->
+
+<div id="demo-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class='close'>CLOSE</span>
+      <h2>ほっほっほ　ワシがその嫌な記憶全て、多摩川清流に流しておいたぞ。</h2>
+    </div>
+    <div class="modal-body">
+      <p><video src="/img/water.mp4" autoplay loop muted></p>
+    </div>
+    <div class="modal-footer">
+      <h3>これで嫌なことは忘れて、前を向くのじゃ！！</h3>
+    </div>
+  </div>
+</div>
+
+<!-- ↑　ここまで工事中👷 ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー-->
+
+    <p style="text-align: center;" class="button2"><button id="clear">削除してやり直す</button></p>
+
+  </main>
+
+  <ul id="list">
+    <!-- ここに追加データが挿入される -->
+  </ul>
+  <footer>
+    ひげジジイの毒吐きPad
+  </footer>
+  <!-- 以下にjsを書いていきます -->
+  <script>
+
+    //1.Save クリックイベント
+    $("#save").on("click",function () {
+      const key = $("#title").val();
+      const value=$("#text").val();
+
+      localStorage.setItem(key, value)
+      const html = `
+
+      <li>
+        <p>${key}</p>
+        <p>${value}</p>
+      </li>
+      `;
+      $("#list").append(html);
+
+    });
+
+    //2.浄化 クリックイベント !!!ここで画像表示させたい！
+    
+
+
+    $("#jyoka").on("click",function () {
+      let view = "";
+       view= '<img src = ./img/gu1.jpeg>';
+       $("#pc_hands").html(view);
+
+    });
+
+
+    
+
+
+
+
+    //2.clear クリックイベント
+
+    $("#clear").on("click",function () {
+      localStorage.clear()
+      $("#list").empty();
+
+    });
+
+  
+    
+    
+
+
+    //3.ページ読み込み：保存データ取得表示
+
+    for(let i = 0; i < localStorage.length; i++){
+      const key = localStorage.key(i);
+      const value = localStorage.getItem(key);
+      const html = `
+
+      <li>
+        <p>${key}</P>
+        <p>${value}</p>
+      </li>
+      `;
+      $("#list").append(html);
+    }
+
+    // ↓これから工事　👷 ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+var modal = document.getElementById('demo-modal');
+var btn = document.getElementById('open-modal');
+var close = modal.getElementsByClassName('close')[0];
+
+// When the user clicks the button, open the modal.
+btn.onclick = function() {
+  modal.style.display = 'block';
+};
+
+// When the user clicks on 'X', close the modal
+close.onclick = function() {
+  modal.style.display = 'none';
+};
+
+// When the user clicks outside the modal -- close it.
+window.onclick = function(event) {
+  if (event.target == modal) {
+    // Which means he clicked somewhere in the modal (background area), but not target = modal-content
+    modal.style.display = 'none';
+  }
+};
+
+// ↑ここまで工事中　👷 ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+
+
+  </script>
+</body>
+
+</html>
